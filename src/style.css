@@ -12,6 +12,11 @@ body {
   align-items: center;
 }
 
+button {
+  font-size: 30px;
+  font-weight: 400;
+}
+
 .calculator {
   display: grid;
   background-color: black;
@@ -23,11 +28,17 @@ body {
 .calculator * {
   margin: 0;
   padding: 0;
-  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .display {
   grid-column: 1 / -1;
+  font-size: 50px;
+  font-weight: 500;
+  padding-right: 20px;
+  justify-content: right;
 }
 
 .zero {
