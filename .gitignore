@@ -1,0 +1,19 @@
+# Ignore node_modules
+node_modules/
+
+# Ignore build output
+dist/
+
+# Ignore TypeScript config caches
+*.tsbuildinfo
+
+# Ignore temporary files
+*.log
+*.tmp
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
