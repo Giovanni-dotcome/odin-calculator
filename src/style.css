@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: rgb(255 255 255);
 }
 
 body {
@@ -10,11 +11,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #181a1b;
 }
 
 button {
   font-size: 30px;
   font-weight: 400;
+  background-color: rgb(55, 60, 62);
 }
 
 .calculator {
