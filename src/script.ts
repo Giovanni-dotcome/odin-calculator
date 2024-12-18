@@ -1,32 +1,58 @@
 import {add, sub, mul, div} from './math.js';
 
-var firstNumber: number;
-var secondNumber: number;
-var operationType: string;
+let firstOperand: string = "";
+let operations: string[] = ["+", "-", "×", "÷"];
+let secondOperand: string = "";
+let operation: string;
+let isFirstOperand: Boolean = true;
+let result: string = "";
 
+const buttons = document.querySelectorAll('.btn');
+const display = document.querySelector(".display");
+if (display)
+  display.textContent = result;
 
-function operate(operationType: string, firstNumber: number, secondNumber: number) {
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (button.textContent && operations.includes(button.textContent)) {
+      isFirstOperand = !isFirstOperand;
+      operation = button.textContent;
+    }
+    if (button.textContent && !isNaN(Number(button.textContent))) {
+      if (isFirstOperand) {
+        firstOperand += button.textContent;
+        if (display) display.textContent = firstOperand;
+      }
+      else {
+        secondOperand += button.textContent;
+        if (display) display.textContent = secondOperand;
+      }
+    }
+    if (button.textContent && button.textContent === "=") {
+      if (display) display.textContent = operate(operation, Number(firstOperand), Number(secondOperand))?.toString() || "";
+    }
+    else {
+      console.log(`Operand: ${operation}, First: ${Number(firstOperand)}, Second: ${Number(secondOperand)}, isFirst: ${isFirstOperand}`);
+    }
+  });
+});
+
+function operate(operationType: string, firstNumber: number, secondNumber: number): number | null {
   switch (operationType) {
     case '+':
-      add(firstNumber, secondNumber);
-      break;
+      return add(firstNumber, secondNumber);
 
     case '-':
-      sub(firstNumber, secondNumber);
-      break;
+      return sub(firstNumber, secondNumber);
 
-    case '*':
-      mul(firstNumber, secondNumber);
-      break;
+    case '×':
+      return mul(firstNumber, secondNumber);
 
-    case '/':
-      div(firstNumber, secondNumber);
-      break;
+    case '÷':
+      return div(firstNumber, secondNumber);
 
     default:
-      break;
+      return null;
   }
 }
 
-// testing
-console.log(operate('*', 1, 0));

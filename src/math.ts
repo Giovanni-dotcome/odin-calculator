@@ -1,15 +1,15 @@
-export function add(frtOp: number, sndOp: number): number {
-  return frtOp + sndOp;
+export function add(firstOperand: number, secondOperand: number): number {
+  return firstOperand + secondOperand;
 }
 
-export function sub(frtOp: number, sndOp: number): number {
-  return frtOp - sndOp;
+export function sub(firstOperand: number, secondOperand: number): number {
+  return firstOperand - secondOperand;
 }
 
-export function mul(frtOp: number, sndOp: number): number {
-  return frtOp * sndOp;
+export function mul(firstOperand: number, secondOperand: number): number {
+  return firstOperand * secondOperand;
 }
 
-export function div(frtOp: number, sndOp: number): number | null {
-  return sndOp === 0 ? null :frtOp / sndOp;
+export function div(firstOperand: number, secondOperand: number): number | null {
+  return secondOperand === 0 ? null :firstOperand / secondOperand;
 }
