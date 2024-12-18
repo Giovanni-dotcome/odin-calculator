@@ -5,12 +5,9 @@ let operations: string[] = ["+", "-", "×", "÷"];
 let secondOperand: string = "";
 let operation: string;
 let isFirstOperand: Boolean = true;
-let result: string = "";
 
 const buttons = document.querySelectorAll('.btn');
 const display = document.querySelector(".display");
-if (display)
-  display.textContent = result;
 
 buttons.forEach(button => {
   button.addEventListener('click', () => {
@@ -30,6 +27,14 @@ buttons.forEach(button => {
     }
     if (button.textContent && button.textContent === "=") {
       if (display) display.textContent = operate(operation, Number(firstOperand), Number(secondOperand))?.toString() || "";
+      firstOperand = display?.textContent || "";
+      secondOperand = "";
+      isFirstOperand = !isFirstOperand;
+    }
+    if (button.textContent && button.textContent === "A/C") {
+      if (display) display.textContent = "";
+      firstOperand = "";
+      secondOperand = "";
     }
     else {
       console.log(`Operand: ${operation}, First: ${Number(firstOperand)}, Second: ${Number(secondOperand)}, isFirst: ${isFirstOperand}`);
