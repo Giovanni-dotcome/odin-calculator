@@ -11,6 +11,7 @@ let state: calculatorState = calculatorState.STARTING;
 let firstOperand: string = "";
 let secondOperand: string = "";
 let operation: string = "";
+let error: boolean = false;
 let operations: string[] = ["+", "-", "×", "÷"];
 
 const buttons = document.querySelectorAll('.btn');
@@ -81,9 +82,12 @@ function updateDisplay() {
     display.textContent = secondOperand;
   else
     display.textContent = firstOperand;
+  if (error)
+    display.textContent = "Error";
 }
 
 function resetCalculator() {
+  error = false;
   firstOperand = "";
   secondOperand = "";
   operation = "";
@@ -108,7 +112,7 @@ function operate(operationType: string, firstNumber: number, secondNumber: numbe
     case '÷':
       const divResult = div(firstNumber, secondNumber);
       if (divResult === null)
-        resetCalculator();
+        error = true;
       return divResult;
 
     default:
