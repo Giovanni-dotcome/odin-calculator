@@ -39,7 +39,6 @@ function handleBackspaceInput() {
     firstOperand = (-Number(firstOperand)).toString();
   if (state === calculatorState.SECOND_OPERAND)
     secondOperand = (-Number(secondOperand)).toString();
-  console.log(firstOperand);
 }
 
 function handleNumberInput(input: string) {
