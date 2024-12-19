@@ -26,9 +26,20 @@ function handleInput(input: string) {
     handleEqualsInput();
   if (input === "A/C")
     resetCalculator();
+  if (input === "+/-")
+    handleBackspaceInput();
+
 
   updateDisplay();
   logTest();
+}
+
+function handleBackspaceInput() {
+  if (state === calculatorState.FIRST_OPERAND)
+    firstOperand = (-Number(firstOperand)).toString();
+  if (state === calculatorState.SECOND_OPERAND)
+    secondOperand = (-Number(secondOperand)).toString();
+  console.log(firstOperand);
 }
 
 function handleNumberInput(input: string) {
