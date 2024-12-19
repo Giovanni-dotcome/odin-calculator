@@ -11,5 +11,5 @@ export function mul(firstOperand: number, secondOperand: number): number {
 }
 
 export function div(firstOperand: number, secondOperand: number): number | null {
-  return secondOperand === 0 ? null :firstOperand / secondOperand;
+  return secondOperand === 0 ? null : Number((firstOperand / secondOperand).toFixed(4));
 }
