@@ -99,17 +99,20 @@ function handleNumberInput(input: string) {
 
 function handleOperationInput(input: string) {
   if (display?.textContent?.slice(-1) === ".") return;
-  if (state === calculatorState.FIRST_OPERAND) {
-    operation = input;
-    state = calculatorState.OPERATION;
-  }
-  if (state === calculatorState.OPERATION)
-    operation = input;
-  if (state === calculatorState.SECOND_OPERAND) {
-    firstOperand = operate(operation, Number(firstOperand), Number(secondOperand))?.toString() || "";
-    secondOperand = "";
-    operation = input;
-    state = calculatorState.OPERATION;
+
+  switch (state) {
+    case calculatorState.FIRST_OPERAND:
+      operation = input;
+      state = calculatorState.OPERATION;
+      break;
+    case calculatorState.OPERATION:
+      operation = input;
+      break;
+    case calculatorState.SECOND_OPERAND:
+      firstOperand = operate(operation, Number(firstOperand), Number(secondOperand))?.toString() || "";
+      secondOperand = "";
+      operation = input;
+      state = calculatorState.OPERATION;
   }
 }
 
