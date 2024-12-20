@@ -28,7 +28,8 @@ function handleInput(input: string) {
     resetCalculator();
   if (input === "+/-")
     handleBackspaceInput();
-
+  if (input === "C")
+  //   TODO: handleCancelInput()
 
   updateDisplay();
   logTest();
@@ -42,7 +43,10 @@ function handleBackspaceInput() {
 }
 
 function handleNumberInput(input: string) {
-  if (state === calculatorState.FIRST_OPERAND || state === calculatorState.STARTING) {
+  // TODO: max 7 digits numbers max 4 decimal digits
+  // TODO: dot decimal value
+  // TODO: don't set 0 if it's leading
+  if (state === calculatorState.FIRST_OPERAND || state === calculatorState.STARTING && input !== "0") {
     firstOperand += input;
     state = calculatorState.FIRST_OPERAND
   }
