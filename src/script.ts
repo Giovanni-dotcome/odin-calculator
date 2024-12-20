@@ -34,6 +34,7 @@ function handleInput(input: string) {
     InputHandlers[input]();
 
   updateDisplay();
+  console.log(state);
 }
 
 function handleBackspaceInput() {
@@ -51,15 +52,24 @@ function handleBackspaceInput() {
 }
 
 function handleDotInput() {
-  if (state === calculatorState.STARTING || state === calculatorState.OPERATION) {
-    firstOperand = "0.";
-    return;
-  }
   if (display?.textContent?.includes(".")) return;
-  if (state === calculatorState.FIRST_OPERAND)
-    firstOperand += ".";
-  if (state === calculatorState.SECOND_OPERAND)
-    secondOperand += ".";
+
+  switch (state) {
+    case calculatorState.STARTING:
+      firstOperand = "0.";
+      state = calculatorState.FIRST_OPERAND;
+      break;
+    case calculatorState.FIRST_OPERAND:
+      firstOperand += ".";
+      break;
+    case calculatorState.OPERATION:
+      secondOperand = "0.";
+      state = calculatorState.SECOND_OPERAND;
+      break;
+    case calculatorState.SECOND_OPERAND:
+      secondOperand += ".";
+      break;
+  }
 }
 
 function handleChangeSignInput() {
