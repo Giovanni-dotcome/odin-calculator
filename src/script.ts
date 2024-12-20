@@ -18,31 +18,36 @@ const buttons = document.querySelectorAll('.btn');
 const display = document.querySelector(".display");
 
 function handleInput(input: string) {
+  const InputHandlers: Record<string, () => void> = {
+    "=": handleEqualsInput,
+    "A/C": resetCalculator,
+    "+/-": handleChangeSignInput,
+    "C": handleBackspaceInput,
+    ".": handleDotInput,
+  }
+
   if (isNumber(input))
     handleNumberInput(input);
   if (operations.includes(input))
     handleOperationInput(input);
-  if (input === "=")
-    handleEqualsInput();
-  if (input === "A/C")
-    resetCalculator();
-  if (input === "+/-")
-    handleBackspaceInput();
-  if (input === "C")
-    handleCancelInput()
-  if (input === ".")
-    handleDotInput();
+  if (InputHandlers[input])
+    InputHandlers[input]();
 
   updateDisplay();
 }
 
-function handleCancelInput() {
-  if (state === calculatorState.OPERATION)
-    operation = "";
-  if (state === calculatorState.FIRST_OPERAND)
-    firstOperand = firstOperand.slice(0, -1);
-  if (state === calculatorState.SECOND_OPERAND)
-    secondOperand = secondOperand.slice(0, -1);
+function handleBackspaceInput() {
+  switch (state) {
+    case calculatorState.FIRST_OPERAND:
+      firstOperand = firstOperand.slice(0, -1);
+      break;
+    case calculatorState.SECOND_OPERAND:
+      secondOperand = secondOperand.slice(0, -1);
+      break;
+    case calculatorState.OPERATION:
+      operation = "";
+      state = calculatorState.FIRST_OPERAND;
+  }
 }
 
 function handleDotInput() {
@@ -57,7 +62,7 @@ function handleDotInput() {
     secondOperand += ".";
 }
 
-function handleBackspaceInput() {
+function handleChangeSignInput() {
   if (state === calculatorState.FIRST_OPERAND)
     firstOperand = (-Number(firstOperand)).toString();
   if (state === calculatorState.SECOND_OPERAND)
