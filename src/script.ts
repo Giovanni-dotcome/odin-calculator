@@ -29,10 +29,32 @@ function handleInput(input: string) {
   if (input === "+/-")
     handleBackspaceInput();
   if (input === "C")
-  //   TODO: handleCancelInput()
+    handleCancelInput()
+  if (input === ".")
+    handleDotInput();
 
   updateDisplay();
-  logTest();
+}
+
+function handleCancelInput() {
+  if (state === calculatorState.OPERATION)
+    operation = "";
+  if (state === calculatorState.FIRST_OPERAND)
+    firstOperand = firstOperand.slice(0, -1);
+  if (state === calculatorState.SECOND_OPERAND)
+    secondOperand = secondOperand.slice(0, -1);
+}
+
+function handleDotInput() {
+  if (state === calculatorState.STARTING || state === calculatorState.OPERATION) {
+    firstOperand = "0.";
+    return;
+  }
+  if (display?.textContent?.includes(".")) return;
+  if (state === calculatorState.FIRST_OPERAND)
+    firstOperand += ".";
+  if (state === calculatorState.SECOND_OPERAND)
+    secondOperand += ".";
 }
 
 function handleBackspaceInput() {
@@ -43,9 +65,8 @@ function handleBackspaceInput() {
 }
 
 function handleNumberInput(input: string) {
-  // TODO: max 7 digits numbers max 4 decimal digits
-  // TODO: dot decimal value
-  // TODO: don't set 0 if it's leading
+  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.split(".")[0].length || 0) >= 6) return;
+  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.includes(".") && display?.textContent?.split(".")[1].length || 0) >= 4) return;
   if (state === calculatorState.FIRST_OPERAND || state === calculatorState.STARTING && input !== "0") {
     firstOperand += input;
     state = calculatorState.FIRST_OPERAND
@@ -59,6 +80,7 @@ function handleNumberInput(input: string) {
 }
 
 function handleOperationInput(input: string) {
+  if (display?.textContent?.slice(-1) === ".") return;
   if (state === calculatorState.FIRST_OPERAND) {
     operation = input;
     state = calculatorState.OPERATION;
@@ -74,6 +96,7 @@ function handleOperationInput(input: string) {
 }
 
 function handleEqualsInput() {
+  if (display?.textContent?.slice(-1) === ".") return;
   if (state === calculatorState.SECOND_OPERAND) {
     firstOperand = operate(operation, Number(firstOperand), Number(secondOperand))?.toString() || "";
     secondOperand = "";
@@ -106,10 +129,6 @@ function resetCalculator() {
   secondOperand = "";
   operation = "";
   state = calculatorState.STARTING;
-}
-
-function logTest() {
-  console.log(`firstOperand: ${firstOperand}, secondOperand: ${secondOperand}, operation: ${operation}`);
 }
 
 function operate(operationType: string, firstNumber: number, secondNumber: number): number | null {

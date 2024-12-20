@@ -1,8 +1,6 @@
-// TODO: add auxiliary function for max length of integer part (max 1 million)
-//TODO:  move to auxiliary function the decimal point numbers check
 function parseNumber(number: number): number {
   if (number >= 1_000_000)
-    return Number(999_999);
+    return Number(999_999.9999);
   return Number(number.toFixed(4));
 }
 
