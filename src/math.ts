@@ -13,9 +13,9 @@ export function sub(firstOperand: number, secondOperand: number): number {
 }
 
 export function mul(firstOperand: number, secondOperand: number): number {
-  return  Number((firstOperand * secondOperand).toFixed(4));
+  return  parseNumber(firstOperand * secondOperand);
 }
 
 export function div(firstOperand: number, secondOperand: number): number | null {
-  return secondOperand === 0 ? null : Number((firstOperand / secondOperand).toFixed(4));
+  return secondOperand === 0 ? null : parseNumber(firstOperand / secondOperand);
 }
