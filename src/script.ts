@@ -73,10 +73,13 @@ function handleDotInput() {
 }
 
 function handleChangeSignInput() {
-  if (state === calculatorState.FIRST_OPERAND)
-    firstOperand = (-Number(firstOperand)).toString();
-  if (state === calculatorState.SECOND_OPERAND)
-    secondOperand = (-Number(secondOperand)).toString();
+  switch (state) {
+    case calculatorState.FIRST_OPERAND:
+      firstOperand = (-Number(firstOperand)).toString();
+      break;
+    case calculatorState.SECOND_OPERAND:
+      secondOperand = (-Number(secondOperand)).toString();
+  }
 }
 
 function handleNumberInput(input: string) {
