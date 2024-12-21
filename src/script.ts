@@ -85,16 +85,9 @@ function handleChangeSignInput() {
 
 function handleNumberInput(input: string) {
   // TODO: refactor handleNumberInput function
-  // TODO: if I write 999_999. then I can't write decimal point numbers. I never enter into the decimal side if statement below
-  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.includes(".") && display?.textContent?.split(".")[1].length || 0) >= 4) {
-    console.log("decimal side");
-    return;
-  }
+  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.includes(".") && display?.textContent?.split(".")[1].length || 0) >= 4) return;
 
-  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.split(".")[0].length || 0) >= 6) {
-    console.log("integer side");
-    return;
-  }
+  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.split(".")[0].length || 0) >= 6 && !display?.textContent?.includes(".")) return;
 
   if (state === calculatorState.FIRST_OPERAND || state === calculatorState.STARTING && input !== "0") {
     firstOperand += input;
