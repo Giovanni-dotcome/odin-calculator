@@ -82,23 +82,46 @@ function handleChangeSignInput() {
   }
 }
 
+function reachedFractionalLimit(): boolean {
+  return (display?.textContent?.includes(".") || false) && (display?.textContent?.split(".")[1].length || 0) >= 4;
+}
+
+function reachedIntegerLimit(): boolean {
+  return !(display?.textContent?.includes(".")) && (display?.textContent?.split(".")[0].length || 0) >= 6;
+}
+
+function handleStartingState(input: string) {
+  if (input === "0") return;
+  firstOperand += input;
+  state = calculatorState.FIRST_OPERAND
+}
+
+function handleOperandState(input: string) {
+  if (reachedFractionalLimit() || reachedIntegerLimit()) return;
+  if (state === calculatorState.FIRST_OPERAND)
+    firstOperand += input;
+  else
+    secondOperand += input;
+}
+
+function handleOperationState(input: string) {
+  secondOperand += input;
+  state = calculatorState.SECOND_OPERAND;
+}
 
 function handleNumberInput(input: string) {
-  // TODO: refactor handleNumberInput function
-  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.includes(".") && display?.textContent?.split(".")[1].length || 0) >= 4) return;
-
-  if ((state === calculatorState.FIRST_OPERAND || state === calculatorState.SECOND_OPERAND) && (display?.textContent?.split(".")[0].length || 0) >= 6 && !display?.textContent?.includes(".")) return;
-
-  if (state === calculatorState.FIRST_OPERAND || state === calculatorState.STARTING && input !== "0") {
-    firstOperand += input;
-    state = calculatorState.FIRST_OPERAND
+  switch (state) {
+    case calculatorState.STARTING:
+      handleStartingState(input);
+      break;
+    case calculatorState.FIRST_OPERAND:
+    case calculatorState.SECOND_OPERAND:
+      handleOperandState(input);
+      break;
+    case calculatorState.OPERATION:
+      handleOperationState(input);
+      break;
   }
-  if (state === calculatorState.OPERATION || state === calculatorState.SECOND_OPERAND)
-    secondOperand += input;
-  if (state === calculatorState.OPERATION)
-    state = calculatorState.SECOND_OPERAND;
-  if (operation === "=")
-    firstOperand = input;
 }
 
 function handleOperationInput(input: string) {
